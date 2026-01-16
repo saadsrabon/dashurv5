@@ -1,116 +1,143 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, Palette, Smartphone, Globe, TrendingUp, Search, Layout as LayoutIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Layout } from "@/components/layout/Layout";
-import { ScrollReveal } from "@/components/ScrollReveal";
-import { PageTransition } from "@/components/PageTransition";
-import { AbstractArt } from "@/components/AbstractArt";
+import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Palette,
+  Smartphone,
+  Globe,
+  TrendingUp,
+  Search,
+  Layout as LayoutIcon,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Layout } from '@/components/layout/Layout';
+import { ScrollReveal } from '@/components/ScrollReveal';
+import { PageTransition } from '@/components/PageTransition';
+import { AbstractArt } from '@/components/AbstractArt';
+import { useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 const services = [
   {
     icon: Palette,
-    title: "Graphic Design",
-    description: "Elevate your brand with our creative graphic design service. We transform ideas into captivating visuals that leave a lasting impression.",
+    title: 'Graphic Design',
+    description:
+      'Elevate your brand with our creative graphic design service. We transform ideas into captivating visuals that leave a lasting impression.',
   },
   {
     icon: LayoutIcon,
-    title: "UI/UX Design",
-    description: "Unlock the power of exceptional user experiences with our UI/UX design service. We ensure your product stands out and delights users.",
+    title: 'UI/UX Design',
+    description:
+      'Unlock the power of exceptional user experiences with our UI/UX design service. We ensure your product stands out and delights users.',
   },
   {
     icon: Smartphone,
-    title: "App Development",
-    description: "Transform your ideas into exceptional mobile experiences with our cutting-edge app development services.",
+    title: 'App Development',
+    description:
+      'Transform your ideas into exceptional mobile experiences with our cutting-edge app development services.',
   },
   {
     icon: Globe,
-    title: "Web Development",
-    description: "Revolutionize your online presence with our web development services. Our skilled team creates websites that captivate users.",
+    title: 'Web Development',
+    description:
+      'Revolutionize your online presence with our web development services. Our skilled team creates websites that captivate users.',
   },
   {
     icon: TrendingUp,
-    title: "Digital Marketing",
-    description: "Elevate your brand's online visibility and reach new heights with our comprehensive digital marketing services.",
+    title: 'Digital Marketing',
+    description:
+      "Elevate your brand's online visibility and reach new heights with our comprehensive digital marketing services.",
   },
   {
     icon: Search,
-    title: "SEO",
-    description: "Boost your online presence and climb search engine rankings with our SEO expertise. Our tailored strategies focus on traffic.",
+    title: 'SEO',
+    description:
+      'Boost your online presence and climb search engine rankings with our SEO expertise. Our tailored strategies focus on traffic.',
   },
 ];
 
 const caseStudies = [
   {
-    client: "Global Fintech",
-    title: "Reduced transaction processing time by 94%",
-    description: "Rebuilt core payment infrastructure to handle 50M+ daily transactions with sub-100ms latency.",
+    client: 'Global Fintech',
+    title: 'Reduced transaction processing time by 94%',
+    description:
+      'Rebuilt core payment infrastructure to handle 50M+ daily transactions with sub-100ms latency.',
     metrics: [
-      { value: "94%", label: "Faster processing" },
-      { value: "50M+", label: "Daily transactions" },
-      { value: "99.99%", label: "Uptime achieved" },
+      { value: '94%', label: 'Faster processing' },
+      { value: '50M+', label: 'Daily transactions' },
+      { value: '99.99%', label: 'Uptime achieved' },
     ],
-    category: "Infrastructure",
-    image: "/placeholder.svg",
+    category: 'Infrastructure',
+    image: '/placeholder.svg',
   },
   {
-    client: "Healthcare Platform",
-    title: "AI-powered diagnostics at scale",
-    description: "Developed machine learning pipeline that analyzes medical imaging with 97% accuracy, deployed across 200+ hospitals.",
+    client: 'Healthcare Platform',
+    title: 'AI-powered diagnostics at scale',
+    description:
+      'Developed machine learning pipeline that analyzes medical imaging with 97% accuracy, deployed across 200+ hospitals.',
     metrics: [
-      { value: "97%", label: "Diagnostic accuracy" },
-      { value: "200+", label: "Hospitals deployed" },
-      { value: "2M+", label: "Patients served" },
+      { value: '97%', label: 'Diagnostic accuracy' },
+      { value: '200+', label: 'Hospitals deployed' },
+      { value: '2M+', label: 'Patients served' },
     ],
-    category: "AI & ML",
-    image: "/placeholder.svg",
+    category: 'AI & ML',
+    image: '/placeholder.svg',
   },
   {
-    client: "Enterprise SaaS",
-    title: "Zero-downtime migration to microservices",
-    description: "Transformed monolithic architecture to event-driven microservices while serving 100K concurrent users.",
+    client: 'Enterprise SaaS',
+    title: 'Zero-downtime migration to microservices',
+    description:
+      'Transformed monolithic architecture to event-driven microservices while serving 100K concurrent users.',
     metrics: [
-      { value: "0", label: "Minutes downtime" },
-      { value: "100K", label: "Concurrent users" },
-      { value: "3x", label: "Developer velocity" },
+      { value: '0', label: 'Minutes downtime' },
+      { value: '100K', label: 'Concurrent users' },
+      { value: '3x', label: 'Developer velocity' },
     ],
-    category: "Architecture",
-    image: "/placeholder.svg",
+    category: 'Architecture',
+    image: '/placeholder.svg',
   },
 ];
 
 const techStack = [
-  { name: "React", category: "Frontend" },
-  { name: "Next.js", category: "Frontend" },
-  { name: "TypeScript", category: "Language" },
-  { name: "Python", category: "Backend" },
-  { name: "Node.js", category: "Backend" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "MongoDB", category: "Database" },
-  { name: "AWS", category: "Cloud" },
-  { name: "GCP", category: "Cloud" },
-  { name: "Docker", category: "DevOps" },
-  { name: "Kubernetes", category: "DevOps" },
-  { name: "TensorFlow", category: "AI/ML" },
-  { name: "PyTorch", category: "AI/ML" },
-  { name: "OpenAI", category: "AI/ML" },
-  { name: "Redis", category: "Cache" },
-  { name: "GraphQL", category: "API" },
+  { name: 'React', category: 'Frontend' },
+  { name: 'Next.js', category: 'Frontend' },
+  { name: 'TypeScript', category: 'Language' },
+  { name: 'Python', category: 'Backend' },
+  { name: 'Node.js', category: 'Backend' },
+  { name: 'PostgreSQL', category: 'Database' },
+  { name: 'MongoDB', category: 'Database' },
+  { name: 'AWS', category: 'Cloud' },
+  { name: 'GCP', category: 'Cloud' },
+  { name: 'Docker', category: 'DevOps' },
+  { name: 'Kubernetes', category: 'DevOps' },
+  { name: 'TensorFlow', category: 'AI/ML' },
+  { name: 'PyTorch', category: 'AI/ML' },
+  { name: 'OpenAI', category: 'AI/ML' },
+  { name: 'Redis', category: 'Cache' },
+  { name: 'GraphQL', category: 'API' },
 ];
 
 const metrics = [
-  { value: "50+", label: "Enterprise clients" },
-  { value: "99.9%", label: "System uptime" },
-  { value: "12", label: "Countries served" },
-  { value: "8+", label: "Years building" },
+  { value: '50+', label: 'Enterprise clients' },
+  { value: '99.9%', label: 'System uptime' },
+  { value: '12', label: 'Countries served' },
+  { value: '3+', label: 'Years building' },
 ];
 
 const principles = [
-  "We write code that outlives projects.",
-  "Simplicity is the ultimate sophistication.",
-  "Every system should explain itself.",
+  'We write code that outlives projects.',
+  'Simplicity is the ultimate sophistication.',
+  'Every system should explain itself.',
 ];
 
 export default function Home() {
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState(0);
+  const [scrollOffset, setScrollOffset] = useState(0);
+
+  const scrollContainerRef = useRef(null);
+  const techRef = useRef(null);
+  const techInView = useInView(techRef, { once: true });
   return (
     <PageTransition>
       <Layout>
@@ -118,7 +145,7 @@ export default function Home() {
         <section className="min-h-[90vh] flex items-center relative overflow-hidden">
           <AbstractArt variant="circles" className="right-0 top-20 opacity-60" />
           <AbstractArt variant="dots" className="left-20 bottom-40 opacity-40" />
-          
+
           <div className="container-wide py-28 md:py-36 relative z-10">
             <div className="max-w-5xl">
               <ScrollReveal>
@@ -131,7 +158,8 @@ export default function Home() {
               </ScrollReveal>
               <ScrollReveal delay={200}>
                 <p className="mt-12 text-body-lg max-w-2xl">
-                  We partner with ambitious teams to build software that performs, endures, and evolves. From AI-powered platforms to mission-critical infrastructure.
+                  We partner with ambitious teams to build software that performs, endures, and
+                  evolves. From AI-powered platforms to mission-critical infrastructure.
                 </p>
               </ScrollReveal>
               <ScrollReveal delay={300}>
@@ -159,7 +187,7 @@ export default function Home() {
         {/* Services Section */}
         <section className="section-padding relative overflow-hidden">
           <AbstractArt variant="lines" className="right-10 top-40 opacity-50" />
-          
+
           <div className="container-wide relative z-10">
             <div className="mb-20">
               <ScrollReveal>
@@ -190,15 +218,13 @@ export default function Home() {
 
         {/* Tech Stack Section */}
         <section className="section-padding-sm bg-secondary/30 relative overflow-hidden">
-          <AbstractArt variant="grid" className="left-0 top-10 opacity-30" />
-          
+          <AbstractArt variant="grid" className="left-0 top-10 opacity-100" />
+
           <div className="container-wide relative z-10">
             <ScrollReveal>
               <div className="text-center mb-16">
                 <p className="text-caption mb-5">Technology</p>
-                <h2 className="text-headline text-foreground">
-                  Built with modern tools
-                </h2>
+                <h2 className="text-headline text-foreground">Built with modern tools</h2>
               </div>
             </ScrollReveal>
 
@@ -207,7 +233,9 @@ export default function Home() {
                 <ScrollReveal key={tech.name} delay={index * 30} direction="none">
                   <div className="tech-card flex items-center gap-3 cursor-default">
                     <span className="text-base font-medium text-foreground">{tech.name}</span>
-                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-lg">{tech.category}</span>
+                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-lg">
+                      {tech.category}
+                    </span>
                   </div>
                 </ScrollReveal>
               ))}
@@ -218,15 +246,13 @@ export default function Home() {
         {/* Case Studies Section */}
         <section className="section-padding relative overflow-hidden">
           <AbstractArt variant="waves" className="right-20 top-20 opacity-40" />
-          
+
           <div className="container-wide relative z-10">
             <ScrollReveal>
               <div className="flex items-end justify-between mb-20">
                 <div>
                   <p className="text-caption mb-5">Case Studies</p>
-                  <h2 className="text-headline text-foreground">
-                    Results that speak
-                  </h2>
+                  <h2 className="text-headline text-foreground">Results that speak</h2>
                 </div>
                 <ScrollReveal delay={100}>
                   <Button variant="minimal" asChild className="hidden md:flex">
@@ -245,7 +271,7 @@ export default function Home() {
                   <div className="group relative bg-card py-12 lg:py-16 px-8 lg:px-12 rounded-3xl border border-border/30 hover:bg-accent/30 hover:border-border/50 transition-all duration-500 hover-lift overflow-hidden">
                     {/* Subtle gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
+
                     <div className="relative z-10 grid lg:grid-cols-12 gap-10 lg:gap-14">
                       {/* Left - Meta */}
                       <div className="lg:col-span-3">
@@ -254,7 +280,7 @@ export default function Home() {
                         </span>
                         <p className="text-base text-muted-foreground">{study.client}</p>
                       </div>
-                      
+
                       {/* Center - Content */}
                       <div className="lg:col-span-5">
                         <h3 className="text-2xl lg:text-3xl font-semibold text-foreground leading-tight mb-5 group-hover:text-foreground/80 transition-colors">
@@ -262,13 +288,15 @@ export default function Home() {
                         </h3>
                         <p className="text-body text-base">{study.description}</p>
                       </div>
-                      
+
                       {/* Right - Metrics */}
                       <div className="lg:col-span-4">
                         <div className="grid grid-cols-3 gap-6">
                           {study.metrics.map((metric) => (
                             <div key={metric.label}>
-                              <p className="text-3xl lg:text-4xl font-semibold text-foreground tracking-tight">{metric.value}</p>
+                              <p className="text-3xl lg:text-4xl font-semibold text-foreground tracking-tight">
+                                {metric.value}
+                              </p>
                               <p className="text-sm text-muted-foreground mt-2">{metric.label}</p>
                             </div>
                           ))}
@@ -281,17 +309,190 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <section ref={techRef} className="relative py-32  text-black overflow-hidden">
+          <div className="container mx-auto px-6 lg:px-8 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Left Side - Text Content */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={techInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+              >
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+                  Embrace Innovation,
+                  <br />
+                  <span className=" text-black clip-text text-transparent">Master Tomorrow</span>
+                </h2>
+                <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                  From cutting-edge development to cloud solutions and AI, our technology expertise
+                  allows us to build solutions that accommodate what's happening in your industry
+                  today - and prepare you for what's next.
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-all duration-300"
+                  // onClick={() => navigate("/capabilties")}
+                >
+                  Explore our technologies →
+                </motion.button>
+              </motion.div>
 
+              {/* Right Side - Looping Cards */}
+              <div
+                ref={scrollContainerRef}
+                className="relative h-[600px] overflow-hidden border-2 border-white/30 rounded-xl bg-white/5 backdrop-blur-sm p-4"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  setIsDragging(true);
+                  setDragStart(e.clientY - scrollOffset);
+                }}
+                onMouseMove={(e) => {
+                  if (isDragging) {
+                    e.preventDefault();
+                    const newOffset = e.clientY - dragStart;
+                    setScrollOffset(newOffset);
+                  }
+                }}
+                onMouseUp={() => setIsDragging(false)}
+                onMouseLeave={() => setIsDragging(false)}
+                onTouchStart={(e) => {
+                  e.preventDefault();
+                  setIsDragging(true);
+                  setDragStart(e.touches[0].clientY - scrollOffset);
+                }}
+                onTouchMove={(e) => {
+                  if (isDragging) {
+                    e.preventDefault();
+                    const newOffset = e.touches[0].clientY - dragStart;
+                    setScrollOffset(newOffset);
+                  }
+                }}
+                onTouchEnd={() => setIsDragging(false)}
+                style={{ cursor: isDragging ? 'grabbing' : 'grab', userSelect: 'none' }}
+              >
+                <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white-900 via-gray-900/80 to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white-900 via-gray-900/80 to-transparent z-10 pointer-events-none" />
+
+                <div
+                  className="animate-scroll-up group"
+                  style={{
+                    transform: `translateY(${scrollOffset}px)`,
+                    animationPlayState: isDragging ? 'paused' : 'running',
+                  }}
+                >
+                  {[
+                    { title: 'Frontend Development', desc: 'React, Vue.js, Angular' },
+                    { title: 'Backend Development', desc: 'Node.js, Python, Java' },
+                    { title: 'Mobile Development', desc: 'React Native, Flutter' },
+                    { title: 'Cloud Solutions', desc: 'AWS, Azure, Google Cloud' },
+                    { title: 'AI & Machine Learning', desc: 'TensorFlow, PyTorch' },
+                    { title: 'DevOps', desc: 'Docker, Kubernetes' },
+                  ].map((tech, index) => (
+                    <motion.div
+                      key={index}
+                      className="relative p-8 rounded-xl text-black mb-4 backdrop-blur-xl bg-white/10 border border-white/20 shadow-xl overflow-hidden group/card"
+                    >
+                      {/* Watermark number - stroke type */}
+                      <div className="absolute top-4 right-4 text-black/50 group-hover/card:text-black/15 transition-colors duration-300">
+                        <span
+                          className="text-8xl font-black"
+                          style={
+                            {
+                              WebkitTextStroke: '2px rgba(0, 0, 0, 0.1)',
+                              WebkitTextFillColor: 'transparent',
+                            } as React.CSSProperties
+                          }
+                        >
+                          {index + 1}
+                        </span>
+                      </div>
+
+                      {/* Bluish light hover effect - individual card */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-400/0 to-blue-600/0 group-hover/card:from-blue-500/20 group-hover/card:via-blue-400/30 group-hover/card:to-blue-600/20 transition-all duration-300 rounded-xl" />
+                      <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                        <div className="absolute inset-0 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.5)] group-hover/card:shadow-[0_0_30px_rgba(59,130,246,0.8)]" />
+                      </div>
+
+                      <div className="relative z-10">
+                        <h3 className="text-lg font-bold mb-1">{tech.title}</h3>
+                        <p className="text-black/80 text-sm">{tech.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                  {/* Duplicate for seamless loop */}
+                  {[
+                    { title: 'Frontend Development', desc: 'React, Vue.js, Angular' },
+                    { title: 'Backend Development', desc: 'Node.js, Python, Java' },
+                    { title: 'Mobile Development', desc: 'React Native, Flutter' },
+                    { title: 'Cloud Solutions', desc: 'AWS, Azure, Google Cloud' },
+                    { title: 'AI & Machine Learning', desc: 'TensorFlow, PyTorch' },
+                    { title: 'DevOps', desc: 'Docker, Kubernetes' },
+                  ].map((tech, index) => (
+                    <motion.div
+                      key={`duplicate-${index}`}
+                      className="relative p-8 rounded-xl text-black mb-4 backdrop-blur-xl bg-white/10 border border-white/20 shadow-xl overflow-hidden group/card"
+                    >
+                      {/* Watermark number - stroke type */}
+                      <div className="absolute top-4 right-4 text-black/10 group-hover/card:text-white/15 transition-colors duration-300">
+                        <span
+                          className="text-8xl font-black"
+                          style={ {
+                              WebkitTextStroke: '2px rgba(0, 0, 0, 0.1)',
+                              WebkitTextFillColor: 'transparent',
+                            } as React.CSSProperties}
+                        >
+                          {index + 1}
+                        </span>
+                      </div>
+
+                      {/* Bluish light hover effect - individual card */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-400/0 to-blue-600/0 group-hover/card:from-blue-500/20 group-hover/card:via-blue-400/30 group-hover/card:to-blue-600/20 transition-all duration-300 rounded-xl" />
+                      <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                        <div className="absolute inset-0 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.5)] group-hover/card:shadow-[0_0_30px_rgba(59,130,246,0.8)]" />
+                      </div>
+
+                      <div className="relative z-10">
+                        <h3 className="text-lg font-bold mb-1">{tech.title}</h3>
+                        <p className="text-black/80 text-sm">{tech.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Custom CSS for scrolling animation */}
+          <style>{`
+          @keyframes scroll-up {
+            0% {
+              transform: translateY(0);
+            }
+            100% {
+              transform: translateY(-50%);
+            }
+          }
+          .animate-scroll-up {
+            animation: scroll-up 30s linear infinite;
+          }
+          .group:hover .animate-scroll-up {
+            animation-play-state: paused;
+          }
+        `}</style>
+        </section>
         {/* Metrics Section */}
         <section className="section-padding-sm relative">
           <AbstractArt variant="dots" className="right-32 bottom-20 opacity-30" />
-          
+
           <div className="container-wide relative z-10">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-14 lg:gap-10">
               {metrics.map((metric, index) => (
                 <ScrollReveal key={metric.label} delay={index * 100}>
                   <div className="text-center lg:text-left">
-                    <p className="text-6xl md:text-7xl font-semibold tracking-tight text-foreground">{metric.value}</p>
+                    <p className="text-6xl md:text-7xl font-semibold tracking-tight text-foreground">
+                      {metric.value}
+                    </p>
                     <p className="mt-4 text-lg text-muted-foreground">{metric.label}</p>
                   </div>
                 </ScrollReveal>
@@ -308,7 +509,7 @@ export default function Home() {
         {/* Philosophy Section */}
         <section className="section-padding relative overflow-hidden">
           <AbstractArt variant="circles" className="right-0 bottom-0 opacity-30" />
-          
+
           <div className="container-wide relative z-10">
             <div className="max-w-5xl">
               <ScrollReveal>
@@ -343,14 +544,12 @@ export default function Home() {
             <div className="absolute top-10 left-10 w-64 h-64 rounded-full border border-primary-foreground/20" />
             <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full border border-primary-foreground/10" />
           </div>
-          
+
           <div className="container-wide relative z-10">
             <div className="grid lg:grid-cols-2 gap-14 items-center">
               <div>
                 <ScrollReveal direction="none">
-                  <h2 className="text-headline">
-                    Ready to build something that matters?
-                  </h2>
+                  <h2 className="text-headline">Ready to build something that matters?</h2>
                   <p className="mt-8 text-xl opacity-70 max-w-lg">
                     Let's discuss how we can help you achieve your technical ambitions.
                   </p>
