@@ -5,7 +5,8 @@ import { Layout } from "@/components/layout/Layout";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PageTransition } from "@/components/PageTransition";
 import { AbstractArt } from "@/components/AbstractArt";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from 'framer-motion';
 
 const capabilities = [
   {
@@ -62,6 +63,82 @@ const capabilities = [
   },
 ];
 
+  const technologyGroups = [
+    {
+      title: "Mobile Development",
+      subtext: "Cross-platform and native mobile solutions",
+      items: [
+        {
+          name: "iOS",
+          description: "Apple Platform Development",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg",
+        },
+        {
+          name: "Android",
+          description: "Google Platform Development",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg",
+        },
+        {
+          name: "Flutter",
+          description: "Cross-Platform Development",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
+        }
+      ]
+    },
+    {
+      title: "Backend & Systems",
+      subtext: "Enterprise-grade server infrastructure",
+      items: [
+        {
+          name: "Python",
+          description: "Backend Development & AI/ML",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        },
+        {
+          name: "Django",
+          description: "Python Web Framework",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
+        },
+        {
+          name: "Laravel",
+          description: "PHP Framework",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg",
+        },
+        {
+          name: "Go",
+          description: "System Programming",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
+        },
+        {
+          name: "Java",
+          description: "Enterprise Applications",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+        }
+      ]
+    },
+    {
+      title: "Frontend & Runtime",
+      subtext: "Modern client-side and server-side JavaScript",
+      items: [
+        {
+          name: "React JS",
+          description: "Frontend Development",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        },
+        {
+          name: "Node.js",
+          description: "JavaScript Runtime",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+        },
+        {
+          name: "TypeScript",
+          description: "Typed JavaScript",
+          imageLink: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        }
+      ]
+    }
+  ];
+
 const certifications = [
   { name: "Ultimate AWS Cloud", icon: Cloud, category: "Cloud" },
   { name: "Mac OS Terminal", icon: Terminal, category: "Systems" },
@@ -99,6 +176,8 @@ const caseStudies = [
 ];
 
 export default function Capabilities() {
+   const technologiesRef = useRef(null);
+   const technologiesInView = useInView(technologiesRef, { once: false, margin: "-100px" });
     useEffect(() => {window.scrollTo(0, 0);}, []);
   return (
     <PageTransition>
@@ -164,7 +243,89 @@ export default function Capabilities() {
             </div>
           ))}
         </section>
+        <section 
+          ref={technologiesRef}
+          className="px-6 md:px-12 lg:px-24 xl:px-32 py-32"
+        >
+          <div className="max-w-7xl mx-auto">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={technologiesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              className="text-4xl md:text-5xl font-bold mb-20 tracking-tight"
+            >
+              Technologies
+            </motion.h2>
 
+            <div className="space-y-32">
+              {technologyGroups.map((group, groupIndex) => (
+                <motion.div
+                  key={groupIndex}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={technologiesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    ease: [0.25, 0.1, 0.25, 1],
+                    delay: groupIndex * 0.2
+                  }}
+                  className="space-y-8"
+                >
+                  <div className="space-y-4 mb-12">
+                    <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">
+                      {group.title}
+                    </h3>
+                    <p className="text-lg text-slate-500">
+                      {group.subtext}
+                    </p>
+                    <div className="h-px w-24 bg-slate-800"></div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+                    {group.items.map((tech, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0 }}
+                        animate={technologiesInView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ 
+                          duration: 0.6, 
+                          ease: [0.25, 0.1, 0.25, 1],
+                          delay: (groupIndex * 0.2) + (index * 0.1)
+                        }}
+                        className="group"
+                      >
+                        <div className="space-y-6">
+                          {/* Logo */}
+                          <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                              <img 
+                                src={tech.imageLink} 
+                                alt={tech.name}
+                                className={`w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300 ${ tech.name === "iOS" ? "brightness-0 invert" : "" }`} 
+                              />
+                            </div>
+                          </div>
+
+                          {/* Name and Description */}
+                          <div className="space-y-2">
+                            <h4 className="text-xl font-semibold tracking-tight group-hover:text-cyan-300 transition-colors duration-300">
+                              {tech.name}
+                            </h4>
+                            <p className="text-sm text-slate-500 leading-relaxed">
+                              {tech.description}
+                            </p>
+                          </div>
+
+                          {/* Subtle underline on hover */}
+                          <div className="h-px w-0 bg-slate-700 group-hover:w-full transition-all duration-500"></div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
         {/* Certifications Section */}
         <section className="section-padding bg-secondary/30 relative overflow-hidden">
           <AbstractArt variant="dots" className="right-20 top-20 opacity-40" />
