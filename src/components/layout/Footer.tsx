@@ -11,11 +11,13 @@ const footerLinks = {
     { name: "AI & Automation", href: "/capabilities#ai" },
     { name: "Software Engineering", href: "/capabilities#engineering" },
     { name: "Product Architecture", href: "/capabilities#product" },
+    { name: "Branding", href: "/capabilities#product" },
   ],
   markets: [
-    { name: "Fintech", href: "/markets#fintech" },
+    { name: "Hospitality/Entertainment", href: "/markets#fintech" },
     { name: "Healthcare", href: "/markets#healthcare" },
-    { name: "Enterprise", href: "/markets#enterprise" },
+    { name: "Aerospace", href: "/markets#enterprise" },
+    { name: "DOD", href: "/markets#enterprise" },
   ],
 };
 
