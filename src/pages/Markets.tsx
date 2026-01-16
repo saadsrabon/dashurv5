@@ -9,34 +9,34 @@ import { useEffect } from "react";
 
 const markets = [
   {
-    id: "fintech",
-    name: "Fintech",
+    id: "Hospitality/Entertainment",
+    name: "Hospitality/Entertainment",
     challenge: "Navigating complex regulations while delivering seamless user experiences",
-    approach: "We build compliant, secure financial systems with the performance and reliability that users expect from modern fintech.",
+    approach: "Our AI and robotics solutions on Hospitality are streamlining operations and enhancing guest experiences. From automated check-in systems to robot concierges for hotels and resorts deliver services. Also, providing automated adjusting equipment for Entertainment.",
   },
   {
     id: "healthcare",
     name: "Healthcare",
     challenge: "Balancing innovation with patient privacy and clinical accuracy",
-    approach: "HIPAA-compliant platforms that leverage AI to improve outcomes while maintaining the trust essential to healthcare delivery.",
+    approach: "We are revolutionizing patient care, assisting in diagnosis, surgery, and rehabilitation, while also streamlining administrative tasks, leading to improved treatment outcomes and operational efficiency within medical facilities.",
   },
   {
-    id: "logistics",
-    name: "Logistics",
+    id: "Manufacturing",
+    name: "Manufacturing",
     challenge: "Optimizing complex supply chains with real-time visibility",
-    approach: "Intelligent systems that predict, adapt, and optimize logistics operations at scale, turning data into competitive advantage.",
+    approach: "Dashur AI is transforming the Manufacturing industry, enhancing efficiency and precision through automated assembly lines, predictive maintenance algorithms, and robotic arms to cope with the evolving market demands.",
   },
   {
-    id: "saas",
-    name: "SaaS",
+    id: "DOD",
+    name: "DOD",
     challenge: "Scaling product development without sacrificing velocity",
-    approach: "Architecture and engineering practices that enable rapid iteration while maintaining code quality and system reliability.",
+    approach: "In Defense, we are reshaping military capabilities, enabling autonomous drones, unmanned vehicles, and intelligent surveillance systems to enhance situational awareness, strategic planning, and mission execution, while also minimizing risks to human personnel on the battlefield.",
   },
   {
-    id: "enterprise",
+    id: "Aerospace",
     name: "Enterprise Systems",
     challenge: "Modernizing legacy systems without disrupting operations",
-    approach: "Thoughtful migration strategies and modern architectures that preserve institutional knowledge while enabling transformation.",
+    approach: "We help designing and producing advanced aircraft and spacecraft, enabling precise engineering, autonomous navigation, and predictive maintenance, ultimately ensuring safer and more efficient air and space travel. Also, managing aero plane show to attract people in Aerospace.",
   },
 ];
 

@@ -153,7 +153,7 @@ export default function Contact() {
                             href="mailto:hello@dashur.ai"
                             className="text-xl text-foreground hover:text-muted-foreground transition-colors"
                           >
-                            hello@dashur.ai
+                            contact@dashurai.com
                           </a>
                         </div>
                       </div>
